@@ -1,4 +1,5 @@
 #!/bin/bash
+make
 
 cd oneTBB-tbb_2020/examples && make
 

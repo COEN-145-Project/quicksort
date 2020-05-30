@@ -4,6 +4,7 @@ default:
 	# LDFLAGS = -static
 	g++ quicksort.cpp -o quicksort
 
+run_tbb:
 	./build_and_test.sh test1.txt 1
 
 clean:

@@ -1,0 +1,72 @@
+100.txt
+0.000000 seconds
+100.txt
+0.000000 seconds
+100.txt
+0.000000 seconds
+100.txt
+0.000000 seconds
+100.txt
+0.000000 seconds
+100.txt
+0.000000 seconds
+500.txt
+0.000000 seconds
+500.txt
+0.000000 seconds
+500.txt
+0.000000 seconds
+500.txt
+0.000000 seconds
+500.txt
+0.000000 seconds
+500.txt
+0.000000 seconds
+1000.txt
+0.000000 seconds
+1000.txt
+0.000000 seconds
+1000.txt
+0.000000 seconds
+1000.txt
+0.010000 seconds
+1000.txt
+0.010000 seconds
+1000.txt
+0.000000 seconds
+10000.txt
+0.000000 seconds
+10000.txt
+0.000000 seconds
+10000.txt
+0.010000 seconds
+10000.txt
+0.070000 seconds
+10000.txt
+0.110000 seconds
+10000.txt
+0.140000 seconds
+50000.txt
+0.010000 seconds
+50000.txt
+0.010000 seconds
+50000.txt
+0.030000 seconds
+50000.txt
+0.130000 seconds
+50000.txt
+0.150000 seconds
+50000.txt
+0.310000 seconds
+100000.txt
+0.020000 seconds
+100000.txt
+0.020000 seconds
+100000.txt
+0.040000 seconds
+100000.txt
+0.160000 seconds
+100000.txt
+0.190000 seconds
+100000.txt
+0.400000 seconds

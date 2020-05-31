@@ -3,6 +3,7 @@
 #include <time.h>
 #include "omp.h"
 
+#define getClock() ((double)clock() / CLOCKS_PER_SEC)
 
 static void import(char const * const filename, int * const np, int** const ap)
 {
@@ -83,18 +84,19 @@ int main(int argc, char **argv)
 		printf("%d\n", a[i]);
 	}*/
     	
-
+	double start = getClock();
 	#pragma omp parallel num_threads(4)
 	{
-	   #pragma omp single nowait
+	   #pragma omp single
 	   {
 		quickSort(a, low, high);
 	   }
 	}
+	double end = getClock();
 	for(i = 0; i < n; i++)
 	{
 		printf("%d\n", a[i]);
 	}
-    
+ 	printf("%f seconds\n", end - start);   
 	return EXIT_SUCCESS;
 }

@@ -30,10 +30,15 @@
 #include <utility>
 #include <iostream>
 #include <sstream>
+// #include "tbb.h"
 #include "tbb/tick_count.h"
-#include "tbb/parallel_reduce.h"
-#include "tbb/parallel_invoke.h"
+// #include "tbb/parallel_reduce.h"
 #include "tbb/global_control.h"
+#include "tbb/parallel_invoke.h"
+// #include "tbb/task_scheduler_init.h"
+
+// module load tbb/2019_U4-GCCcore-8.2.0
+// srun --nodes 1 --ntasks 1 --cpus-per-task 1 --pty /bin/bash
 
 
 
@@ -81,22 +86,6 @@ static int partition(int *a, int lo, int hi)
 	return i;
 }
 
-static void quickSort(int *a, int lo, int hi)
-{
-	//printf("%d %d %d\n", a[0], lo, hi);
-	int pivot;
-	if (lo < hi)
-	{
-		pivot = partition(a, lo, hi);
-        tbb::parallel_invoke(
-        [&]{quickSort(a, lo, pivot-1);},
-        [&]{quickSort(a, pivot+1, hi);}
-    );
-		// quickSort(a, lo, pivot-1);
-		// quickSort(a, pivot+1, hi);
-	}
-}
-
 static void print1()
 {
     printf("test1\n");
@@ -111,17 +100,39 @@ static void print2()
     printf("test4\n");
 }
 
+static void quickSort(int *a, int lo, int hi)
+{
+	// printf("%d %d %d\n", a[0], lo, hi);
+	int pivot;
+	if (lo < hi)
+	{
+		pivot = partition(a, lo, hi);
+        tbb::parallel_invoke(
+        [&]{quickSort(a, lo, pivot-1);},
+        [&]{quickSort(a, pivot+1, hi);}
+    );
+		// quickSort(a, lo, pivot-1);
+		// quickSort(a, pivot+1, hi);
+	}
+}
+
+
 int quickSortMain(char * fileName, int thread_count)
 {
 	int n, i, j, low, high;
 	int *a;
+
+    // const size_t parallelism = tbb::task_scheduler_init::default_num_threads();
+
+    // printf("default thread count is %d\n", parallelism);
 
 	// if(argc < 3)
 	// {
 	// 	return EXIT_FAILURE;
 	// }
 
-    printf("running with %d threads\n", thread_count);
+    // printf("running with %d threads\n", thread_count);
+    tbb::global_control c(tbb::global_control::max_allowed_parallelism, thread_count);
 	import(fileName, &n, &a);
 	low = 0;
 	high = n;
@@ -131,13 +142,20 @@ int quickSortMain(char * fileName, int thread_count)
 	}*/
 
     // tbb::parallel_invoke(
-    //     [&]{print1();},
-    //     [&]{print2();}
+    //     [&]{print2();},
+    //     [&]{print1();}
+    // );
+
+
+    // tbb::parallel_invoke(
+    //     print1,
+    //     print2
     // );
 
     // test line
     
-    tbb::global_control c(tbb::global_control::max_allowed_parallelism, thread_count);
+    
+    // tbb::task_scheduler_init(28);
     tbb::tick_count start_time = tbb::tick_count::now();
 	quickSort(a, low, high);
     tbb::tick_count end_time = tbb::tick_count::now();
@@ -159,7 +177,7 @@ int quickSortMain(char * fileName, int thread_count)
 int main(int argc, char **argv)
 {
 
-    printf("Main called\n");
+    // printf("Main called\n");
 
     if(argc < 3)
 	{
@@ -170,6 +188,7 @@ int main(int argc, char **argv)
 
     char * fileName = argv[1];
     uint fileSize = atoi(argv[2]);
+    
 	quickSortMain(fileName, fileSize);
     
 	return EXIT_SUCCESS;

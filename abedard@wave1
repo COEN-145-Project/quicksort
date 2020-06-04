@@ -9,7 +9,7 @@ results_file = "resultsITBB.txt"
 
 def main():
     for file_name in file_list:
-        for thread_count in range(1,29):
+        for thread_count in range(0,29):
             total_time = 0
             run_count = 0
             for attempt in range(0,total_runs):

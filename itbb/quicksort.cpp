@@ -9,7 +9,7 @@
 #include <math.h>
 #include <cstdlib>
 #include <cctype>
-#include "tbb/parallel_reduce.h"
+// #include "tbb/parallel_reduce.h"
 #include "tbb/parallel_invoke.h"
 
 #include "tbb/tick_count.h"
@@ -98,7 +98,9 @@ int quickSortMain(char * fileName, int thread_count)
 	// 	return EXIT_FAILURE;
 	// }
 
-    printf("running with %d threads\n", thread_count);
+	tbb::global_control c(tbb::global_control::max_allowed_parallelism, thread_count);
+
+    // printf("running with %d threads\n", thread_count);
 	import(fileName, &n, &a);
 	low = 0;
 	high = n;
@@ -107,14 +109,14 @@ int quickSortMain(char * fileName, int thread_count)
 		printf("%d\n", a[i]);
 	}*/
 
-    // tbb::parallel_invoke(
-    //     [&]{print1();},
-    //     [&]{print2();}
-    // );
+    tbb::parallel_invoke(
+        [&]{print1();},
+        [&]{print2();}
+    );
 
     // test line
     
-    tbb::global_control c(tbb::global_control::max_allowed_parallelism, thread_count);
+    
     tbb::tick_count start_time = tbb::tick_count::now();
 	quickSort(a, low, high);
     tbb::tick_count end_time = tbb::tick_count::now();

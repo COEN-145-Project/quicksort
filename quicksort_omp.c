@@ -64,8 +64,6 @@ void quickSort(int *a, int lo, int hi)
 	if (lo < hi)
 	{
 		pivot = partition(a, lo, hi);
-		if((hi - lo) > 1000)
-		{	
 	        #pragma omp task
 		{
 		quickSort(a, lo, pivot-1);
@@ -74,14 +72,8 @@ void quickSort(int *a, int lo, int hi)
 		{
 		quickSort(a, pivot+1, hi);
 		}
-		}
-		else
-		{
-		   quickSort(a, lo, pivot-1);
-		   quickSort(a, pivot+1, hi);
-		}
 		
-		}
+	}
 }
 
 int main(int argc, char **argv)

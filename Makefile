@@ -15,7 +15,7 @@ run_tbb_hpc:
 	./quicksort test1.txt 1
 
 run_tbb_local:
-	./oneTBB-tbb_2020/examples/quicksort_tbb/quicksort/quicksort
+	./oneTBB-tbb_2020/examples/quicksort_tbb/quicksort/quicksort test1.txt 1
 	
 clean:
 	rm quicksort_omp
